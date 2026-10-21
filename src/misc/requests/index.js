@@ -15,12 +15,15 @@ const addAxiosInterceptors = ({
   axios.interceptors.response.use(
     (response) => response.data,
     (error) => {
-      if (error.response.data
-        .some(beError => beError?.code === 'INVALID_TOKEN')
+      // Not every service answers with an array of errors (e.g. book-service
+      // returns RFC 9457 problem details), and a network error has no response
+      const errors = error.response?.data;
+      if (Array.isArray(errors)
+        && errors.some(beError => beError?.code === 'INVALID_TOKEN')
       ) {
         onSignOut();
       }
-      throw error.response.data;
+      throw errors || error;
     }
   );
 };

@@ -20,6 +20,7 @@ const TextField = ({
   AdornmentStart,
   AdornmentEnd,
   autoFocus = false,
+  children, // options (MenuItem) when the field is a select
   colorVariant = colorVariants.primary,
   disabled = false,
   helperText,
@@ -31,6 +32,7 @@ const TextField = ({
   onChange,
   onSelect,
   required = false,
+  select = false,
   value,
 }) => {
   const { theme } = useTheme();
@@ -85,6 +87,7 @@ const TextField = ({
         isFocused: true,
       })}
       onSelect={onSelect}
+      select={select}
       sx={{
         '& .MuiInputBase-root:before': {
           display: 'none',
@@ -113,7 +116,9 @@ const TextField = ({
       type={inputType}
       value={value}
       variant="standard"
-    />
+    >
+      {children}
+    </TextFieldMui>
   );
 };
 
