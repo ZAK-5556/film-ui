@@ -2,6 +2,7 @@ import { createUseStyles } from 'react-jss';
 import { useIntl } from 'react-intl';
 import * as authorities from 'constants/authorities';
 import * as pages from 'constants/pages';
+import IconFilms from 'components/icons/Films';
 import IconButton from 'components/IconButton/IconButton';
 import IconLockOpen from 'components/icons/LockOpen';
 import IconMenu from 'components/icons/Menu';
@@ -20,7 +21,13 @@ const getClasses = createUseStyles((theme) => ({
   },
 }));
 
+// Items without neededAuthorities are available to everyone
 const menuItems = [
+  {
+    icon: <IconFilms />,
+    link: `${pagesURLs[pages.filmList]}`,
+    titleIntlId: `page.${pages.filmList}`,
+  },
   {
     icon: <IconLockOpen />,
     link: `${pagesURLs[pages.secretPage]}`,
@@ -44,7 +51,8 @@ function LeftNavBar() {
   });
 
   const filteredItems = useMemo(
-    () => menuItems.filter(item => accessValidate(item.neededAuthorities)),
+    () => menuItems.filter(item => !item.neededAuthorities
+      || accessValidate(item.neededAuthorities)),
     [accessValidate],
   );
 
@@ -74,6 +82,7 @@ function LeftNavBar() {
         <div className={classes.menuHeaderSpace} />
         {filteredItems.map(menuItem => (
           <Link
+            key={menuItem.link}
             onClick={onClose}
             to={{
               pathname: menuItem.link,

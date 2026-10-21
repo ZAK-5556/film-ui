@@ -22,11 +22,13 @@ function MenuItem({
   onClick,
   selected = false,
   value,
+  ...propsFromSelect // a select adds role, aria-selected, etc. to its options
 }) {
   const { theme } = useTheme();
   const classes = getClasses({ theme });
   return (
     <MenuItemMUI
+      {...propsFromSelect}
       onClick={onClick}
       selected={selected}
       sx={{

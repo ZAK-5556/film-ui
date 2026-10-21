@@ -11,6 +11,8 @@ import {
 import { addAxiosInterceptors } from 'misc/requests';
 import * as pages from 'constants/pages';
 import AuthoritiesProvider from 'misc/providers/AuthoritiesProvider';
+import FilmDetailsPage from 'pageProviders/FilmDetails';
+import FilmListPage from 'pageProviders/FilmList';
 import DefaultPage from 'pageProviders/Default';
 import Loading from 'components/Loading';
 import LoginPage from 'pageProviders/Login';
@@ -74,6 +76,14 @@ function App() {
                     <Route
                       element={<DefaultPage />}
                       path={`${pageURLs[pages.defaultPage]}`}
+                    />
+                    <Route
+                      element={<FilmListPage />}
+                      path={`${pageURLs[pages.filmList]}`}
+                    />
+                    <Route
+                      element={<FilmDetailsPage />}
+                      path={`${pageURLs[pages.filmDetails]}/:filmId`}
                     />
                     <Route
                       element={<SecretPage />}
